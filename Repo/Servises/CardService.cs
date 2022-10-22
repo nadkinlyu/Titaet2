@@ -22,74 +22,83 @@ public class CardService : ICardService
 		_db = db;
 	}
 
-	public async Task<Card> Add(long id, long userid, long discontid)
+	public async Task<Card> Add(long id, long personid, long discontid)
 	{
-		if (await _db.Disconts.AllAsync(x => x.Value == value))
-			throw new TirException($"Value {value} already exists!", EnumErrorCode.EntityIsAlreadyExists);
-		if (await _db.Disconts.AllAsync(x => x.name == name))
-			throw new TirException($"Name {name} already exists!", EnumErrorCode.EntityIsAlreadyExists);
-		var discont = new Discont
+		if (await _db.Persons.AllAsync(x => x.Id != personid))
+			throw new TirException($"Userid {personid} is not exists!", EnumErrorCode.EntityIsNotFound);
+
+		if (await _db.Disconts.AllAsync(x => x.Id != discontid))
+			throw new TirException($"discount id {discontid} already exists!", EnumErrorCode.EntityIsAlreadyExists);
+		
+		var card = new Card
 		{
-			name = name,
-			Value = value
+			Id= id,
+			DiscontId= discontid,
+			PersonId= personid,
 		};
-		await _db.AddAsync(discont);
+		await _db.AddAsync(card);
 		await _db.SaveChangesAsync();
 		
-		return discont;
+		return card;
 
 	}
 
-	public async Task<SearchCardResponse> SearchDiscont(CardGetModel model)
+	public async Task<SearchCardResponse> SearchCard(CardGetModel model)
 	{
-		return await _db.Disconts
+		return await _db.Cards
 			.Where(x =>
-				x.name.Contains(model.Search)
-				|| (x.Value.ToString()).Contains(model.Search)
-				).GetPageAsync<SearchDiscontResponse, Discont, DiscontShortModel>(model, x => new DiscontShortModel
+				x.PersonId.ToString().Contains(model.Search)
+				|| (x.Id.ToString()).Contains(model.Search)
+				).GetPageAsync<SearchCardResponse, Card, CardShortModel>(model, x => new CardShortModel
 			{
 				Id =x.Id,
-			Value=x.Value
+				DiscontId = x.DiscontId,
+				PersonId = x.PersonId,
+
+			
 			});
 	}
 
 
 
-	public async Task<GetCardResponse> GetDiscontAsync(GetCardRequest request)
+	public async Task<GetCardResponse> GetCardAsync(GetCardRequest request)
 	{
-		return await _db.Disconts.GetPageAsync<GetDiscontResponse, Discont, DiscontShortModel>(request, discont =>
-			new DiscontShortModel
-			{Id = discont.Id,
-			Value = discont.Value,
+		return await _db.Cards.GetPageAsync<GetCardResponse, Card, CardShortModel>(request, card =>
+			new CardShortModel
+			{Id =card.Id,
+				DiscontId =card.DiscontId,
+				PersonId = card.PersonId,
 			});
 		
 	}
 
 	
-	public async Task Update(long id, string name, double value)
+	public async Task Update(long id, long personid, long discontid)
 	{
-		var discont = await _db.Disconts.FirstOrDefaultAsync(x => x.Id == id);
-		if (discont is null)
-			throw new TirException($"Discont Id = {id} is not found!", EnumErrorCode.EntityIsNotFound);
-		if (await _db.Disconts.AllAsync(x => x.Value == value))
-			throw new TirException($"Value {value} already exists!", EnumErrorCode.EntityIsAlreadyExists);
+		var card = await _db.Cards.FirstOrDefaultAsync(x => x.PersonId != personid);
+		if (card is null)
+			throw new TirException($" Id = {id} is not found!", EnumErrorCode.EntityIsNotFound);
+		if (await _db.Disconts.AllAsync(x => x.Id != discontid))
+			throw new TirException($"Value {discontid} already exists!",  EnumErrorCode.EntityIsNotFound);
 		
-		if (!string.IsNullOrWhiteSpace(name))
-			discont.name = name;
+		if (id!=0)
+			card.Id = id;
 
-		if (value > 0)
+		if (discontid > 0)
 		{
-			discont.Value = value;	
+			card.DiscontId = discontid;	
 			
 		}
 		await _db.SaveChangesAsync();
 	}
-	public async Task DeleteDiscontAsync(long id)
-	{
-		if (await _db.Disconts.AnyAsync(x => x.Id == id))
-			throw new TirException("Discont is not exists!", EnumErrorCode.EntityIsNotFound);
 
-		_db.Disconts.Remove(new Discont {Id = id});
+
+	public async Task DeleteCardAsync(long personid)
+	{
+		if (await _db.Cards.AnyAsync(x => x.DiscontId == personid))
+			throw new TirException("Person is not exists!", EnumErrorCode.EntityIsNotFound);
+
+		_db.Cards.Remove(new Card {PersonId = personid});
 		await _db.SaveChangesAsync();
 	}
 

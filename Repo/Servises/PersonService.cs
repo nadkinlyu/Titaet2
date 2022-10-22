@@ -23,11 +23,11 @@ public class PersonService : IPersonService
 	{
 		if (await _db.Users.AllAsync(x => x.Id != model.Id))
 			throw new TirException($"User {model.Id} is not exists!", EnumErrorCode.EntityIsNotFound);
-		if (model.CardId > 0)
+		/*if (model.CardId > 0)
 		{
 			if (await _db.Cards.AllAsync(x => x.Id != model.CardId))
 				throw new TirException($"Cart {model.CardId} is not exists!", EnumErrorCode.EntityIsNotFound);
-		}
+		}*/
 
 		var person = new Person
 		{
@@ -36,7 +36,7 @@ public class PersonService : IPersonService
 			Fio = model.Fio,
 			Phone = model.Phone,
 			UserId = model.Id,
-			CardId = model.CardId,
+	//		CardId = model.CardId,
 			
 		};		
 		await _db.AddAsync(person);
@@ -74,7 +74,7 @@ public class PersonService : IPersonService
 				Id = person.Id,
 				Fio = person.Fio,
 				Phone = person.Phone,
-				CardId = person.CardId,
+				//CardId = person.CardId,
 				UserId = person.Id,
 			});
 		
@@ -91,12 +91,12 @@ public class PersonService : IPersonService
 
 		if (!string.IsNullOrWhiteSpace(model.Phone))
 			person.Phone = model.Phone;
-		if (model.CardId > 0)
+		/*if (model.CardId > 0)
 		{
-			if (await _db.Cards.AllAsync(x => x.Id != model.CardId))
+			if (await _db.Cards.AllAsync(x => x.Id != model.Card))
 				throw new TirException($"Cart {model.CardId} is not exists!", EnumErrorCode.EntityIsNotFound);
-			person.CardId = model.CardId;
-		}
+			person.Card = model.Card;
+		}*/
 
 		
 
