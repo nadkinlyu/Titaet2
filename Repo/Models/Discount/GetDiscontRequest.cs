@@ -2,7 +2,7 @@
 
 namespace Repo.Models.Discont{
 
-public class GetDiscontRequest : IPaginationRequest
+public class GetDiscountRequest : IPaginationRequest
 {
 	public long? Id { get; set; } = null;
 

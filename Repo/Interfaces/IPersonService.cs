@@ -2,7 +2,7 @@ using Data.Models;
 using PublishingHouse.Interfaces.Model.Author;
 using Repo.Models.Person;
 
-namespace Repo.Servises;
+namespace Repo.Interfaces;
 
 
 

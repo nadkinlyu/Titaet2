@@ -6,6 +6,6 @@ public class Card
     public Person Person { get; set; } 
     public long PersonId { get; set; }
    
-    public Discont Discont{ get; set; } = null!;
+    public Discount Discount{ get; set; } = null!;
     public long DiscontId { get; set; }
 }

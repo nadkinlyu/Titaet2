@@ -13,7 +13,7 @@ public class CardMap
             .WithOne(x => x.Card)
             .HasForeignKey<Card>(x => x.PersonId);
         builder
-            .HasOne(x => x.Discont)
+            .HasOne(x => x.Discount)
             .WithMany(x => x.Cards)
             .HasForeignKey(x => x.DiscontId);
     }

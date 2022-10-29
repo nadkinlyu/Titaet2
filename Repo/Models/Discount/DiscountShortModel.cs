@@ -1,6 +1,6 @@
 namespace Repo.Models.Discont;
 
-public class DiscontShortModel
+public class DiscountShortModel
 {
     public long Id { get; set; }
     public string name { get; set; }

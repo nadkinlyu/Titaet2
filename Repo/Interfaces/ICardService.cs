@@ -1,9 +1,7 @@
 using Data.Models;
-using PublishingHouse.Interfaces.Model.Author;
 using Repo.Models.Card;
-using Repo.Models.Discont;
 
-namespace Repo.Servises;
+namespace Repo.Interfaces;
 
 public interface ICardService
 {

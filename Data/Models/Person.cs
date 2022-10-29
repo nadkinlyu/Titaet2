@@ -10,4 +10,5 @@ public class Person
     public Card Card { get; set; } = null!;
     
     public long UserId { get; set; }
+    public long CardId { get; set; } 
 }

@@ -1,11 +1,9 @@
 using Data.Models;
-using PublishingHouse.Interfaces.Model.Author;
-using Repo.Models.Discont;
 using Repo.Models.User;
 
-namespace Repo.Servises;
+namespace Repo.Interfaces;
 
-public interface IUserService
+public interface IUserRepo
 {
     Task<User> Add(string login, string fio,  string email, string pas1,string pas2);
 

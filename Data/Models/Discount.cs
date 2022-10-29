@@ -1,6 +1,6 @@
 namespace Data.Models;
 
-public class Discont
+public class Discount
 {
     public long Id { get; set; }
     public string name { get; set; } = string.Empty;

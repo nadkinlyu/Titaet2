@@ -1,17 +1,13 @@
-﻿using System.Linq;
-using Data;
+﻿using Data;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using PublishingHouse.Interfaces.Extensions.Pagination;
-using PublishingHouse.Interfaces.Model.Author;
 using Repo.Enums;
+using Repo.Interfaces;
 using Repo.Models;
 using Repo.Models.Card;
-using Repo.Models.Discont;
-using Repo.Models.Person;
-using Repo.Servises;
 
-namespace Repo.Services;
+namespace Repo.Servises;
 
 public class CardService : ICardService
 {
@@ -27,7 +23,7 @@ public class CardService : ICardService
 		if (await _db.Persons.AllAsync(x => x.Id != personid))
 			throw new TirException($"Userid {personid} is not exists!", EnumErrorCode.EntityIsNotFound);
 
-		if (await _db.Disconts.AllAsync(x => x.Id != discontid))
+		if (await _db.Discounts.AllAsync(x => x.Id != discontid))
 			throw new TirException($"discount id {discontid} already exists!", EnumErrorCode.EntityIsAlreadyExists);
 		
 		var card = new Card
@@ -78,7 +74,7 @@ public class CardService : ICardService
 		var card = await _db.Cards.FirstOrDefaultAsync(x => x.PersonId != personid);
 		if (card is null)
 			throw new TirException($" Id = {id} is not found!", EnumErrorCode.EntityIsNotFound);
-		if (await _db.Disconts.AllAsync(x => x.Id != discontid))
+		if (await _db.Discounts.AllAsync(x => x.Id != discontid))
 			throw new TirException($"Value {discontid} already exists!",  EnumErrorCode.EntityIsNotFound);
 		
 		if (id!=0)

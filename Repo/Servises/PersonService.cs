@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using PublishingHouse.Interfaces.Extensions.Pagination;
 using PublishingHouse.Interfaces.Model.Author;
 using Repo.Enums;
+using Repo.Interfaces;
 using Repo.Models;
 using Repo.Models.Person;
 using Repo.Servises;
@@ -36,7 +37,7 @@ public class PersonService : IPersonService
 			Fio = model.Fio,
 			Phone = model.Phone,
 			UserId = model.Id,
-	//		CardId = model.CardId,
+			CardId = model.CardId,
 			
 		};		
 		await _db.AddAsync(person);
@@ -47,7 +48,8 @@ public class PersonService : IPersonService
 	 Id =person.Id,
 
 	 Fio =person.Fio,
-	Phone=person.Phone
+	Phone=person.Phone,
+	CardId = person.CardId,
 		};
 	}
 
@@ -61,7 +63,8 @@ public class PersonService : IPersonService
 			{
 				Id =x.Id,
 				Fio =x.Fio,
-				Phone=x.Phone
+				Phone=x.Phone,
+				CardId = x.CardId,
 			});
 	}
 
@@ -74,8 +77,8 @@ public class PersonService : IPersonService
 				Id = person.Id,
 				Fio = person.Fio,
 				Phone = person.Phone,
-				//CardId = person.CardId,
-				UserId = person.Id,
+				CardId = person.CardId,
+				
 			});
 		
 	}
@@ -91,12 +94,12 @@ public class PersonService : IPersonService
 
 		if (!string.IsNullOrWhiteSpace(model.Phone))
 			person.Phone = model.Phone;
-		/*if (model.CardId > 0)
+		if (model.CardId > 0)
 		{
-			if (await _db.Cards.AllAsync(x => x.Id != model.Card))
+			if (await _db.Cards.AllAsync(x => x.Id != model.CardId))
 				throw new TirException($"Cart {model.CardId} is not exists!", EnumErrorCode.EntityIsNotFound);
-			person.Card = model.Card;
-		}*/
+			person.CardId = model.CardId;
+		}
 
 		
 

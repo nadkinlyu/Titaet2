@@ -3,17 +3,18 @@ using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using PublishingHouse.Interfaces.Extensions.Pagination;
 using Repo.Enums;
+using Repo.Interfaces;
 using Repo.Models;
 using Repo.Models.Discont;
 using Repo.Models.User;
 
 namespace Repo.Servises;
 
-public class UserService : IUserService
+public class UserRepo : IUserRepo
 {
 	private readonly AplicationContext _db;
 
-	public UserService(AplicationContext db)
+	public UserRepo(AplicationContext db)
 	{
 		_db = db;
 	}

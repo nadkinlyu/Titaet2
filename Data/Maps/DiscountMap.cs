@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Data.Maps;
 
-public class DiscontMap
+public class DiscountMap
 {
-    public DiscontMap(EntityTypeBuilder<Discont> builder)
+    public DiscountMap(EntityTypeBuilder<Discount> builder)
     {
         builder.HasKey(x => x.Id);
     }
